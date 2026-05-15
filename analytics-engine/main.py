@@ -1,6 +1,6 @@
 from services.data_fetcher import get_portfolio_data
 from services.risk_metrics import get_risk_summary
-from services.regime_detector import get_regime_summary
+from services.regime_detector import detect_market_regime_hmm
 from services.stress_tester import get_stress_summary
 from services.momentum import get_momentum_summary
 from agents.decision_engine import generate_decision_options, print_decision_options
@@ -24,16 +24,18 @@ if __name__ == "__main__":
 
     # Step 4 - Market regime detection
     print("\n=== MARKET REGIME DETECTION ===")
-    regime_summary = get_regime_summary(returns)
+    # Compute portfolio returns as weighted sum
+    portfolio_returns = (returns * weights).sum(axis=1)
+    regime_summary = detect_market_regime_hmm(portfolio_returns)
     print(regime_summary)
 
     # Step 5 - Stress testing
     print("\n=== STRESS TEST RESULTS ===")
     stress = get_stress_summary(tickers, weights, portfolio_value)
     print(stress["stress_table"].to_string())
-    print(f"\n⚠️  Worst Scenario : {stress['worst_scenario']}")
-    print(f"💸  Maximum Loss   : ${stress['worst_loss']:,.2f}")
-    print(f"📉  Loss %         : {stress['worst_loss_pct']}%")
+    print(f"\n[!] Worst Scenario : {stress['worst_scenario']}")
+    print(f"[-] Maximum Loss   : ${stress['worst_loss']:,.2f}")
+    print(f"[-] Loss %         : {stress['worst_loss_pct']}%")
 
     # Step 6 - Momentum & Performance Ratios
     print("\n=== MOMENTUM SIGNALS ===")

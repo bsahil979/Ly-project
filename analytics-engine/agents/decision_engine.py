@@ -75,7 +75,7 @@ def generate_decision_options(
 
     options.append({
         "option":       "Conservative",
-        "emoji":        "🛡️",
+        "emoji":        "[SAFE]",
         "description":  "Reduce equity exposure, shift capital to bonds/cash",
         "allocations":  {
             **{t: f"{round(w*100)}%" for t, w in zip(tickers, conservative_weights)},
@@ -103,7 +103,7 @@ def generate_decision_options(
 
     options.append({
         "option":       "Balanced",
-        "emoji":        "⚖️",
+        "emoji":        "[BALANCED]",
         "description":  "Maintain core positions, add moderate diversification",
         "allocations":  {
             **{t: f"{round(w*100)}%" for t, w in zip(tickers, balanced_weights)},
@@ -126,7 +126,7 @@ def generate_decision_options(
     # ─────────────────────────────────────────
     options.append({
         "option":       "Aggressive",
-        "emoji":        "🚀",
+        "emoji":        "[AGGRESSIVE]",
         "description":  "Hold or increase current positions for maximum growth",
         "allocations":  {
             **{t: f"{round(w*100)}%" for t, w in zip(tickers, weights)},
@@ -157,13 +157,13 @@ def print_decision_options(options: list):
     for opt in options:
         print(f"\n{opt['emoji']}  OPTION: {opt['option'].upper()}")
         print(f"   {opt['description']}")
-        print(f"\n   📊 Allocations:")
+        print(f"\n   [#] Allocations:")
         for asset, alloc in opt["allocations"].items():
             print(f"      {asset}: {alloc}")
-        print(f"\n   📈 Expected Return : {opt['expected_return']}")
-        print(f"   📉 Downside Risk   : {opt['downside_risk']}")
-        print(f"\n   🧠 Reasoning:")
+        print(f"\n   [+] Expected Return : {opt['expected_return']}")
+        print(f"   [-] Downside Risk   : {opt['downside_risk']}")
+        print(f"\n   [*] Reasoning:")
         for reason in opt["reasoning"]:
-            print(f"      • {reason}")
-        print(f"\n   👤 Best For: {opt['best_for']}")
+            print(f"      - {reason}")
+        print(f"\n   [?] Best For: {opt['best_for']}")
         print("-"*60)

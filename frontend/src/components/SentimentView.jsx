@@ -11,14 +11,15 @@ import { PortfolioService } from '../services/api';
 
 const COLORS = { positive: '#10b981', negative: '#f43f5e', neutral: '#6b7280' };
 
-const SentimentView = () => {
+const SentimentView = ({ tickers = [] }) => {
   const [sentimentData, setSentimentData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [ticker, setTicker] = useState('AAPL');
-  const [inputTicker, setInputTicker] = useState('AAPL');
+  const [ticker, setTicker] = useState(tickers[0] || '');
+  const [inputTicker, setInputTicker] = useState(tickers[0] || '');
 
   const fetchSentiment = async (sym) => {
+    if (!sym) return;
     try {
       setLoading(true);
       setError(null);
@@ -33,6 +34,14 @@ const SentimentView = () => {
   };
 
   useEffect(() => {
+    if (tickers.length > 0 && !tickers.includes(ticker)) {
+      setTicker(tickers[0]);
+      setInputTicker(tickers[0]);
+    }
+  }, [tickers]);
+
+  useEffect(() => {
+    if (!ticker) return;
     fetchSentiment(ticker);
   }, [ticker]);
 
@@ -57,6 +66,20 @@ const SentimentView = () => {
     if (sentiment?.includes('Bearish')) return 'from-rose-600 to-pink-700';
     return 'from-gray-600 to-slate-700';
   };
+
+  if (tickers.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[450px] bg-[#11131a]/80 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-12 text-center shadow-2xl animate-in fade-in duration-500">
+        <div className="w-20 h-20 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-6">
+          <Newspaper className="w-10 h-10 text-indigo-400" />
+        </div>
+        <h3 className="text-2xl font-black tracking-tight mb-2">No Assets Selected for Sentiment Matrix</h3>
+        <p className="text-sm text-gray-400 max-w-md mx-auto leading-relaxed font-medium">
+          Add ticker symbols using the top navigation header to execute continuous NLP aggregation models across multi-source real-time publication nodes.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-12 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ANALYTICS_URL = 'http://localhost:8002';
+const ANALYTICS_URL = 'http://localhost:8000';
 
 const analyticsApi = axios.create({
   baseURL: ANALYTICS_URL,
@@ -31,6 +31,11 @@ export const PortfolioService = {
 
   getSentiment: async (ticker) => {
     const res = await analyticsApi.get(`/sentiment/${ticker}`);
+    return res.data;
+  },
+
+  getFundamentals: async (ticker) => {
+    const res = await analyticsApi.get(`/fundamentals/${ticker}`);
     return res.data;
   },
 };

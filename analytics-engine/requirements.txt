@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pandas
+numpy
+yfinance
+scikit-learn
+joblib
+hmmlearn
+torch
+stable-baselines3
+gymnasium
+ta
+requests
+python-multipart

@@ -25,7 +25,7 @@ const LandingPage = () => {
           </div>
 
           <Link 
-            to="/dashboard"
+            to="/auth"
             className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
           >
             Launch Dashboard
@@ -54,7 +54,7 @@ const LandingPage = () => {
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-16 duration-1000">
             <Link 
-              to="/dashboard"
+              to="/auth"
               className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-lg font-bold transition-all flex items-center gap-2 shadow-2xl shadow-indigo-600/40"
             >
               Get Started Free <ArrowRight className="w-5 h-5" />

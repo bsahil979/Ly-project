@@ -1,0 +1,436 @@
+AI-Driven Multi-Asset Portfolio Intelligence & Risk Analytics Platform
+Complete Project Design Report (PDR / Black Book)
+________________________________________
+1. Project Overview
+1.1 Project Title
+AI-Driven Multi-Asset Portfolio Intelligence & Risk Analytics Platform
+Alternative Titles:
+	Intelligent Financial Analytics Platform Using Machine Learning and Portfolio Optimization
+	AI-Powered Investment Intelligence and Risk Management System
+	Multi-Asset Financial Intelligence Platform Using AI and Reinforcement Learning
+________________________________________
+1.2 Problem Statement
+Most retail investors today can easily buy stocks using broker platforms, but they lack:
+	Portfolio intelligence
+	Risk awareness
+	Diversification analysis
+	AI-powered insights
+	Sentiment interpretation
+	Predictive analytics
+	Strategy simulation
+	Risk-adjusted portfolio management
+Current broker platforms focus primarily on order execution rather than investment intelligence.
+The proposed system aims to solve this by developing an AI-driven platform capable of:
+	Market analysis
+	Portfolio risk analysis
+	AI-based prediction
+	Sentiment intelligence
+	Portfolio optimization
+	Strategy simulation
+	Reinforcement learning-based trading experimentation
+________________________________________
+1.3 Objective of the Project
+The main objective is to develop an intelligent financial analytics platform capable of:
+	Analyzing stocks and other assets
+	Predicting market trends using ML/DL
+	Evaluating portfolio risk
+	Providing AI-generated insights
+	Optimizing portfolio allocation
+	Simulating investment strategies
+	Performing sentiment analysis from financial news
+	Supporting multi-asset portfolio intelligence
+________________________________________
+1.4 Scope of the System
+Assets Supported
+Phase 1
+	Stocks
+	ETFs
+	Indices
+
+________________________________________
+1.5 Core Functionalities
+The platform will include:
+Module	Purpose
+Market Data Engine	Fetch real-time and historical financial data
+Technical Analysis Engine	Calculate indicators
+Sentiment Engine	Analyze financial news sentiment
+ML Prediction Engine	Predict trends and volatility
+Portfolio Analytics Engine	Analyze diversification and risk
+Optimization Engine	Suggest better allocation
+RL Simulation Engine	Learn trading strategies
+Dashboard	Visualization and analytics
+Backtesting Engine	Historical strategy testing
+________________________________________
+2. System Identity
+What the System IS
+The system is:
+An AI-Powered Investment Intelligence Platform
+It is designed for:
+	Portfolio analysis
+	Investment intelligence
+	Risk analytics
+	Financial research
+	Strategy simulation
+________________________________________
+What the System is NOT
+Not a Broker
+The system does not execute real trades initially.
+Not a Pure Trading Bot
+It focuses on investment intelligence rather than automated trading.
+Not a Financial Advisor
+The system provides AI insights rather than legally binding financial advice.
+________________________________________
+3. System Architecture
+3.1 High-Level Architecture
+User Interface (React/Vite)
+        ↓
+------------------------------------------------
+|             Core Intelligence Layer          |
+|           (Python FastAPI Service)           |
+|----------------------------------------------|
+| Technical Analysis Engine                    |
+| Sentiment Analysis Engine                    |
+| ML Prediction Engine                         |
+| Portfolio Analytics Engine                   |
+| Optimization Engine                          |
+| Reinforcement Learning Engine                |
+------------------------------------------------
+        ↓
+Supabase (Auth + PostgreSQL) + Yahoo Finance API
+________________________________________
+3.2 Technology Stack
+Layer	Technology
+Frontend	React + Vite
+Backend/Auth	Supabase (Cloud)
+AI/ML	Python (FastAPI)
+ML Libraries	TensorFlow / PyTorch / Scikit-learn
+Database	Supabase PostgreSQL
+Data Source	Yahoo Finance API
+Visualization	Recharts
+Deployment	Docker
+Communication	REST APIs
+________________________________________
+4. Detailed Module Breakdown
+4.1 Market Data Engine
+Purpose
+Collect and process financial market data.
+________________________________________
+Data Sources
+Primary
+	Yahoo Finance (yfinance)
+Future
+	Alpha Vantage
+	Polygon.io
+	News APIs
+	NSE/BSE APIs
+________________________________________
+Data Collected
+Data Type	Example
+Open Price	Opening stock price
+High Price	Highest price
+Low Price	Lowest price
+Close Price	Closing price
+Volume	Trading volume
+Dividends	Company payouts
+News Headlines	Financial articles
+Sentiment Data	Positive/Negative tone
+________________________________________
+Example Python Code
+import yfinance as yf
+
+stock = yf.Ticker("AAPL")
+data = stock.history(period="5y")
+________________________________________
+4.2 Technical Analysis Engine
+Purpose
+Calculate indicators used in prediction and analysis.
+________________________________________
+Indicators Used
+1. Simple Moving Average (SMA)
+Used to identify trend direction.
+Formula:
+SMA=(P_1+P_2+...+P_n)/n
+Where:
+	P = Price
+	n = Number of periods
+________________________________________
+2. Exponential Moving Average (EMA)
+Gives higher importance to recent prices.
+Formula:
+EMA_t=(P_t×k)+EMA_(t-1) (1-k)
+Where:
+k=2/(n+1)
+________________________________________
+3. Relative Strength Index (RSI)
+Measures overbought/oversold conditions.
+Formula:
+RSI=100-100/(1+RS)
+Where:
+RS=(Average Gain)/(Average Loss)
+________________________________________
+4. MACD
+Moving Average Convergence Divergence.
+Formula:
+MACD=EMA_12-EMA_26
+Signal Line:
+Signal=EMA_9 (MACD)
+________________________________________
+5. Bollinger Bands
+Formula:
+Upper=SMA+2σ
+Lower=SMA-2σ
+________________________________________
+Libraries
+import ta
+or
+import pandas_ta as ta
+________________________________________
+4.3 Sentiment Analysis Engine
+Purpose
+Analyze financial news and determine market sentiment.
+________________________________________
+Workflow
+News Articles
+      ↓
+Text Cleaning
+      ↓
+Tokenization
+      ↓
+Vectorization
+      ↓
+Sentiment Classification
+      ↓
+Sentiment Score
+________________________________________
+NLP Preprocessing Steps
+1. Lowercasing
+Convert all text to lowercase.
+2. Stopword Removal
+Remove common words.
+3. Tokenization
+Split sentence into words.
+4. Lemmatization
+Convert words to root form.
+Example:
+running → run
+________________________________________
+Vectorization Techniques
+TF-IDF
+Formula:
+TFIDF=TF×IDF
+Where:
+IDF=log(N/df)
+________________________________________
+Models Used
+Traditional ML
+	Naive Bayes
+	SVM
+	Random Forest
+Advanced Models
+	LSTM
+	FinBERT
+	Transformer Models
+________________________________________
+Sentiment Classes
+Class	Meaning
+Positive	Bullish sentiment
+Neutral	No strong effect
+Negative	Bearish sentiment
+________________________________________
+Output
+Example:
+{
+  "sentiment": "Positive",
+  "confidence": 0.89
+}
+________________________________________
+4.4 Machine Learning Prediction Engine
+Purpose
+Predict future market behavior.
+________________________________________
+Prediction Types
+Prediction	Description
+Price Trend	Up/Down
+Volatility	Future risk
+Momentum	Strength of movement
+Risk Score	Portfolio danger
+________________________________________
+Input Features
+Feature Type	Example
+Technical Indicators	RSI, MACD
+Historical Prices	OHLCV
+Volume Data	Trading activity
+Sentiment Score	News polarity
+Volatility Metrics	Standard deviation
+________________________________________
+ML Models
+1. Random Forest
+Why Used
+	Handles nonlinear relationships
+	Good baseline model
+	Robust to noise
+________________________________________
+2. XGBoost
+Why Used
+	High performance
+	Fast training
+	Handles tabular data efficiently
+________________________________________
+3. LSTM
+Why Used
+Financial data is sequential.
+LSTM can remember historical dependencies.
+________________________________________
+LSTM Architecture
+Input Sequence
+      ↓
+LSTM Layers
+      ↓
+Dense Layers
+      ↓
+Prediction Output
+________________________________________
+LSTM Formula
+Forget Gate:
+f_t=σ(W_f [h_(t-1),x_t ]+b_f )
+Input Gate:
+i_t=σ(W_i [h_(t-1),x_t ]+b_i )
+Cell State:
+C_t=f_t*C_(t-1)+i_t*(C_t ) ̃
+________________________________________
+4. Transformer Models
+Used for:
+	news understanding
+	long-range sequence analysis
+Example:
+	FinBERT
+________________________________________
+Model Training Pipeline
+Raw Data
+    ↓
+Preprocessing
+    ↓
+Feature Engineering
+    ↓
+Train/Test Split
+    ↓
+Model Training
+    ↓
+Validation
+    ↓
+Hyperparameter Tuning
+    ↓
+Evaluation
+________________________________________
+Train/Test Split
+Typical:
+Dataset	Percentage
+Training	70%
+Validation	15%
+Testing	15%
+________________________________________
+Evaluation Metrics
+Classification Metrics
+Accuracy
+Accuracy=(TP+TN)/(TP+TN+FP+FN)
+Precision
+Precision=TP/(TP+FP)
+Recall
+Recall=TP/(TP+FN)
+F1 Score
+F1=2×(Precision×Recall)/(Precision+Recall)
+________________________________________
+Regression Metrics
+Mean Squared Error
+MSE=1/n∑(y_i-(y_i ) ̂ )^2
+________________________________________
+Root Mean Squared Error
+RMSE=√MSE
+________________________________________
+Mean Absolute Error
+MAE=1/n∑|y_i-(y_i ) ̂ |
+________________________________________
+4.5 Portfolio Analytics Engine
+Purpose
+Analyze investment portfolio health.
+________________________________________
+Features
+	Diversification analysis
+	Risk analysis
+	Asset allocation
+	Correlation analysis
+	Drawdown analysis
+	Volatility analysis
+________________________________________
+Portfolio Return Formula
+R_p=∑w_i R_i
+Where:
+	w = asset weight
+	R = asset return
+________________________________________
+Portfolio Variance
+σ_p^2=∑w_i^2 σ_i^2+∑∑w_i w_j Cov(i,j)
+________________________________________
+Sharpe Ratio
+Measures risk-adjusted return.
+Sharpe=(R_p-R_f)/σ_p 
+Where:
+	Rp = portfolio return
+	Rf = risk-free rate
+	σp = portfolio volatility
+________________________________________
+Beta
+Measures market sensitivity.
+β=Cov(R_i,R_m )/Var(R_m ) 
+________________________________________
+Maximum Drawdown
+Measures worst historical decline.
+Formula:
+MDD=(Peak-Trough)/Peak
+________________________________________
+Correlation Matrix
+Used to identify diversification.
+Correlation Formula:
+Corr(X,Y)=Cov(X,Y)/(σ_X σ_Y )
+________________________________________
+4.6 Risk Analytics Engine
+Purpose
+Quantify portfolio risk.
+________________________________________
+Value at Risk (VaR)
+Measures expected loss.
+Formula:
+VaR=μ-zσ
+Where:
+	μ = expected return
+	z = confidence level
+	σ = standard deviation
+________________________________________
+Conditional VaR (CVaR)
+Expected loss beyond VaR.
+Formula:
+CVaR=E[Loss|Loss>VaR]
+________________________________________
+Volatility
+Formula:
+σ=√((∑(x_i-μ)^2)/N)
+________________________________________
+Risk Scoring
+Example:
+Risk Score	Interpretation
+0-30	Low Risk
+31-60	Medium Risk
+61-100	High Risk
+________________________________________
+4.7 Portfolio Optimization Engine
+Purpose
+Suggest better portfolio allocation.
+________________________________________
+Markowitz Modern Portfolio Theory
+Goal:
+	maximize returns
+	minimize risk
+Optimization Formula:
+Maximize (R_p-R_f)/σ_p 
+________________________________________
+Efficient Front

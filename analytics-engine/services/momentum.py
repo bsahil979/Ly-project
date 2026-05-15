@@ -28,11 +28,11 @@ def compute_momentum_signals(prices: pd.DataFrame) -> pd.DataFrame:
             if m is None:
                 return "N/A"
             elif m > 0.02:
-                return "🟢 Bullish"
+                return "[+] Bullish"
             elif m < -0.02:
-                return "🔴 Bearish"
+                return "[-] Bearish"
             else:
-                return "🟡 Neutral"
+                return "[~] Neutral"
 
         signals[ticker] = {
             "1M Return":       f"{round(mom_1m  * 100, 2)}%" if mom_1m  is not None else "N/A",
@@ -61,15 +61,15 @@ def _overall_trend(m1, m3, m6, m12) -> str:
     negative = sum(1 for m in signals if m < -0.02)
 
     if positive >= 3:
-        return "🟢 Strong Uptrend"
+        return "[+] Strong Uptrend"
     elif positive == 2:
-        return "🟢 Moderate Uptrend"
+        return "[+] Moderate Uptrend"
     elif negative >= 3:
-        return "🔴 Strong Downtrend"
+        return "[-] Strong Downtrend"
     elif negative == 2:
-        return "🔴 Moderate Downtrend"
+        return "[-] Moderate Downtrend"
     else:
-        return "🟡 Sideways / Mixed"
+        return "[~] Sideways / Mixed"
 
 
 def compute_sharpe_ratio(returns: pd.DataFrame, risk_free_rate: float = 0.05) -> pd.Series:

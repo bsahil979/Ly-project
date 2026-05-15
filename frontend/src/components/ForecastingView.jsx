@@ -8,12 +8,12 @@ import {
 } from 'recharts';
 import { PortfolioService } from '../services/api';
 
-const ForecastingView = () => {
+const ForecastingView = ({ tickers = [] }) => {
   const [forecastData, setForecastData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [ticker, setTicker] = useState('AAPL');
-  const [inputTicker, setInputTicker] = useState('AAPL');
+  const [ticker, setTicker] = useState(tickers[0] || '');
+  const [inputTicker, setInputTicker] = useState(tickers[0] || '');
   const [currency, setCurrency] = useState('USD');
 
   const getCurrencySymbol = (code) => {
@@ -24,6 +24,7 @@ const ForecastingView = () => {
   const currencySymbol = getCurrencySymbol(currency);
 
   const fetchForecast = async (sym) => {
+    if (!sym) return;
     try {
       setLoading(true);
       setError(null);
@@ -43,6 +44,14 @@ const ForecastingView = () => {
   };
 
   useEffect(() => {
+    if (tickers.length > 0 && !tickers.includes(ticker)) {
+      setTicker(tickers[0]);
+      setInputTicker(tickers[0]);
+    }
+  }, [tickers]);
+
+  useEffect(() => {
+    if (!ticker) return;
     fetchForecast(ticker);
   }, [ticker]);
 
@@ -55,6 +64,20 @@ const ForecastingView = () => {
   const pctChange = startPrice > 0 ? (((endPrice - startPrice) / startPrice) * 100).toFixed(1) : 0;
   const isBullish = endPrice > startPrice;
 
+  if (tickers.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[450px] bg-[#11131a]/80 backdrop-blur-xl border border-gray-800/50 rounded-3xl p-12 text-center shadow-2xl animate-in fade-in duration-500">
+        <div className="w-20 h-20 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-6">
+          <TrendingUp className="w-10 h-10 text-indigo-400" />
+        </div>
+        <h3 className="text-2xl font-black tracking-tight mb-2">No Assets Selected for Forecast</h3>
+        <p className="text-sm text-gray-400 max-w-md mx-auto leading-relaxed font-medium">
+          Add ticker symbols using the top navigation search bar to deploy live LSTM deep learning models over pricing trajectories.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-12 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
       
@@ -65,7 +88,7 @@ const ForecastingView = () => {
                <span className="text-xs text-gray-500 uppercase font-bold tracking-widest mb-1">Active Model</span>
                <div className="flex items-center gap-2">
                  <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" />
-                 <span className="text-sm font-bold text-gray-200">RandomForest Forecaster</span>
+                 <span className="text-sm font-bold text-gray-200">LSTM Neural Network</span>
                </div>
             </div>
             <div className="flex flex-col border-l border-gray-800 pl-8">
